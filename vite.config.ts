@@ -1,14 +1,15 @@
-import { defineConfig, loadEnv } from 'vite'
+import { defineConfig, loadEnv, type ConfigEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import UnoCSS from 'unocss/vite'
 
 
 const pathSrc = resolve(__dirname,"src")
 
-export default defineConfig(({mode}) => {
+export default defineConfig(({mode}: ConfigEnv) => {
   const env = loadEnv(mode,process.cwd())
   return {
     resolve:{
@@ -18,9 +19,9 @@ export default defineConfig(({mode}) => {
     },
     css:{
       preprocessorOptions:{
-        // 定义全局 SCSS 变量
-        api:'modern-compiler',
-        additionalData: `@use "@/styles/variables.scss" as * `
+        scss:{
+          additionalData: `@use "@/styles/variables.scss" as * `
+        }
       }
     },
     server:{
@@ -38,6 +39,7 @@ export default defineConfig(({mode}) => {
     },
     plugins:[
       vue(),
+      UnoCSS(),
       AutoImport({
         imports:["vue"],
         resolvers:[
@@ -53,6 +55,8 @@ export default defineConfig(({mode}) => {
         dts:resolve(pathSrc,'types','components.d.ts')
       })
     ],
-
+    optimizeDeps: {
+      include: ['element-plus/theme-chalk/dark/css-vars.css']
+    },
   }
 })
