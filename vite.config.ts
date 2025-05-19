@@ -16,6 +16,13 @@ export default defineConfig(({mode}) => {
         "@":pathSrc
       }
     },
+    css:{
+      preprocessorOptions:{
+        // 定义全局 SCSS 变量
+        api:'modern-compiler',
+        additionalData: `@use "@/styles/variables.scss" as * `
+      }
+    },
     server:{
       host:"0.0.0.0",
       port:+env.VITE_APP_PORT,
