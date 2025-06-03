@@ -20,7 +20,7 @@ export default defineConfig(({mode}: ConfigEnv) => {
     css:{
       preprocessorOptions:{
         scss:{
-          additionalData: `@use "@/styles/variables.scss" as * `
+          additionalData: `@use "@/styles/variables.scss" as *;`
         }
       }
     },
@@ -41,7 +41,7 @@ export default defineConfig(({mode}: ConfigEnv) => {
       vue(),
       UnoCSS(),
       AutoImport({
-        imports:["vue"],
+        imports:["vue", "pinia", "vue-router", "@vueuse/core"],
         resolvers:[
           ElementPlusResolver({ importStyle:"sass" })
         ],
