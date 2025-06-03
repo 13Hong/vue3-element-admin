@@ -1,13 +1,13 @@
-import { LayoutMode,ThemeMode,ComponentSize,LanguageEnum,SidebarColor } from './enums'
+import { LayoutMode, ThemeMode, ComponentSize, LanguageEnum, SidebarColor } from "./enums";
 
 // 检查用户的操作系统是否使用深色模式
 const mediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");
 
-const defaultSettings:AppSettings = {
-//     // 系统Title
-//   title: pkg.name,
-//   // 系统版本
-//   version: pkg.version,
+const defaultSettings: AppSettings = {
+  //     // 系统Title
+  //   title: pkg.name,
+  //   // 系统版本
+  //   version: pkg.version,
   // 是否显示设置
   showSettings: true,
   // 是否显示标签视图
@@ -26,10 +26,10 @@ const defaultSettings:AppSettings = {
   themeColor: "#4080FF",
   // 是否开启水印
   watermarkEnabled: false,
-//   // 水印内容
-//   watermarkContent: pkg.name,
-//   // 侧边栏配色方案
+  //   // 水印内容
+  //   watermarkContent: pkg.name,
+  //   // 侧边栏配色方案
   sidebarColorScheme: SidebarColor.CLASSIC_BLUE,
-} 
+};
 
-export default defaultSettings
+export default defaultSettings;
