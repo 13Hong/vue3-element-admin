@@ -2,9 +2,9 @@
  * 菜单布局枚举
  */
 export const enum LayoutMode {
-    LEFT = 'left', // 左侧菜单布局
-    TOP = 'top', // 顶部菜单布局
-    MIX = 'mix', // 混合布局
+  LEFT = "left", // 左侧菜单布局
+  TOP = "top", // 顶部菜单布局
+  MIX = "mix", // 混合布局
 }
 
 /**

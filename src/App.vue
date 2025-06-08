@@ -1,16 +1,14 @@
 <script setup lang="ts">
-import { useAppStore,useSettingsStore} from '@/store'
+import { useAppStore } from "@/store";
 // import DefaultSettings from '@/settings'
 // import { ThemeMode } from '@/enums/settings/theme.enum'
-import { ComponentSize } from '@/enums/settings/layout.enum'
+import { ComponentSize } from "@/enums/settings/layout.enum";
 
-const appStore = useAppStore()
-const settingsStore = useSettingsStore()
+const appStore = useAppStore();
+// const settingsStore = useSettingsStore()
 
-const locale = computed(() => appStore.locale)
-const size = computed(() => appStore.size as ComponentSize)
-
-
+const locale = computed(() => appStore.locale);
+const size = computed(() => appStore.size as ComponentSize);
 </script>
 
 <template>
@@ -19,6 +17,4 @@ const size = computed(() => appStore.size as ComponentSize)
   </el-config-provider>
 </template>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

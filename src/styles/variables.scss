@@ -1,41 +1,40 @@
-@forward 'element-plus/theme-chalk/src/common/var.scss' with (
-    $colors:(
-        "primary":(
-            "base": #4080ff
-        ),
-        "success":(
-            "base": #23c343
-        ),
-        "warning": (
-            "base": #ff9a2e,
-        ),
-        "danger": (
-            "base": #f76560,
-        ),
-        "info": (
-            "base": #a9aeb8,
-        ),
+@forward "element-plus/theme-chalk/src/common/var.scss" with (
+  $colors: (
+    "primary": (
+      "base": #4080ff,
     ),
+    "success": (
+      "base": #23c343,
+    ),
+    "warning": (
+      "base": #ff9a2e,
+    ),
+    "danger": (
+      "base": #f76560,
+    ),
+    "info": (
+      "base": #a9aeb8,
+    ),
+  ),
 
-    $bg-color:(
-        "page": #f5f8fd
-    )
+  $bg-color: (
+    "page": #f5f8fd,
+  )
 );
 
 /** 全局SCSS变量 */
 
 :root {
-    --menu-background: #fff; // 菜单背景色
-    --menu-text: #212121; // 菜单文字颜色 浅色主题-白色侧边栏配色下仅占位，实际颜色由 el-menu-item 组件决定
-    --menu-active-text: var(
-        --el-menu-active-color
-    ); // 菜单激活文字颜色 浅色主题-白色侧边栏配色下仅占位，实际颜色由 el-menu-item 组件决定
+  --menu-background: #fff; // 菜单背景色
+  --menu-text: #212121; // 菜单文字颜色 浅色主题-白色侧边栏配色下仅占位，实际颜色由 el-menu-item 组件决定
+  --menu-active-text: var(
+    --el-menu-active-color
+  ); // 菜单激活文字颜色 浅色主题-白色侧边栏配色下仅占位，实际颜色由 el-menu-item 组件决定
 
-    --menu-hover: #e6f4ff; // 菜单悬停背景色 浅色主题-白色侧边栏配色下仅占位，实际颜色由 el-menu-item 组件决定
-    --sidebar-logo-background: #f5f5f5; // 侧边栏 Logo 背景色
-    --sidebar-logo-text-color: #333; // 侧边栏 Logo 文字颜色
+  --menu-hover: #e6f4ff; // 菜单悬停背景色 浅色主题-白色侧边栏配色下仅占位，实际颜色由 el-menu-item 组件决定
+  --sidebar-logo-background: #f5f5f5; // 侧边栏 Logo 背景色
+  --sidebar-logo-text-color: #333; // 侧边栏 Logo 文字颜色
 }
-
 
 $menu-background: var(--menu-background); // 菜单背景色
 $menu-text: var(--menu-text); // 菜单文字颜色
