@@ -52,6 +52,8 @@ export default defineConfig(({ mode }: ConfigEnv) => {
       }),
       Components({
         resolvers: [ElementPlusResolver({ importStyle: "sass" })],
+        // 自定义组件位置 （默认：src/components）
+        dirs: ["src/components", "src/**/components"],
         dts: resolve(pathSrc, "types", "components.d.ts"),
       }),
     ],
