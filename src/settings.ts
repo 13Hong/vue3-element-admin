@@ -3,12 +3,12 @@ import { LayoutMode, ThemeMode, ComponentSize, LanguageEnum, SidebarColor } from
 // 检查用户的操作系统是否使用深色模式
 const mediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");
 
-const defaultSettings: AppSettings = {
+export const defaultSettings: AppSettings = {
   // 系统Title
   // title: pkg.name,
-  title: "你好",
+  title: "vue3-element-admin-stduy",
   //   // 系统版本
-  //   version: pkg.version,
+  version: "1.0.0",
   // 是否显示设置
   showSettings: true,
   // 是否显示标签视图
@@ -32,5 +32,3 @@ const defaultSettings: AppSettings = {
   //   // 侧边栏配色方案
   sidebarColorScheme: SidebarColor.CLASSIC_BLUE,
 };
-
-export default defaultSettings;

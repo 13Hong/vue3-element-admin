@@ -6,6 +6,7 @@ import App from "./App.vue";
 import "element-plus/theme-chalk/dark/css-vars.css";
 // 暗黑模式自定义变量
 import "@/styles/dark/css-vars.css";
+import "@/styles/index.scss";
 import "uno.css";
 
 const app = createApp(App);

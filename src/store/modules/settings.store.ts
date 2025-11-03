@@ -1,4 +1,4 @@
-import defaultSettings from "@/settings";
+import { defaultSettings } from "@/settings";
 import { ThemeMode } from "@/enums/settings/theme.enum";
 import { LayoutMode } from "@/enums/settings/layout.enum";
 import { defineStore } from "pinia";

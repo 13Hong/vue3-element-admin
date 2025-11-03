@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import defaultSettings from "@/settings";
+import { defaultSettings } from "@/settings";
 import logo from "@/assets/logo.png";
 
 defineProps({
