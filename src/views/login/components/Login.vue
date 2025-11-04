@@ -130,13 +130,13 @@ const loginRules = computed(() => {
         trigger: "blur",
       },
     ],
-    // captchaCode: [
-    //   {
-    //     required: true,
-    //     trigger: "blur",
-    //     message: ("login.message.captchaCode.required"),
-    //   },
-    // ],
+    captchaCode: [
+      {
+        required: true,
+        trigger: "blur",
+        message: "请输入验证码",
+      },
+    ],
   };
 });
 
@@ -161,9 +161,17 @@ function getCaptcha() {
  */
 async function handleLoginSubmit() {
   try {
+    // 1.表单验证
+    const valid = await loginFormRef.value?.validate();
+    if (!valid) return;
+
     loading.value = true;
+
+    // 2.执行登录
+    console.log(loginFormData.value);
     console.log("登录提交");
   } catch (error) {
+    getCaptcha();
     console.error("登录失败", error);
   } finally {
     loading.value = false;
