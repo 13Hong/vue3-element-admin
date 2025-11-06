@@ -2,6 +2,7 @@ import type { App } from "vue";
 import { setupRoute } from "@/router";
 import { setupStore } from "@/store";
 import { setupIcons } from "./icons";
+import { setupI18n } from "@/lang";
 
 export default {
   install(app: App<Element>) {
@@ -11,5 +12,7 @@ export default {
     setupStore(app);
     // 图标(Icons)
     setupIcons(app);
+    // 国际化
+    setupI18n(app);
   },
 };

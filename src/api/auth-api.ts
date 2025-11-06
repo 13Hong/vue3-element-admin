@@ -10,7 +10,7 @@ const AuthAPI = {
     formData.append("password", data.password);
     formData.append("captchaKey", data.captchaKey);
     formData.append("captchaCode", data.captchaCode);
-    return request<LoginResult>({
+    return request<any, LoginResult>({
       url: `${AUTH_BASE_URL}/login`,
       method: "post",
       data: formData,
@@ -24,7 +24,7 @@ const AuthAPI = {
    * 获取验证码接口
    */
   getCaptcha() {
-    return request<CaptchaInfo>({
+    return request<any, CaptchaInfo>({
       url: `${AUTH_BASE_URL}/captcha`,
       method: "get",
     });

@@ -179,6 +179,7 @@ declare global {
   const useFullscreen: (typeof import("@vueuse/core"))["useFullscreen"];
   const useGamepad: (typeof import("@vueuse/core"))["useGamepad"];
   const useGeolocation: (typeof import("@vueuse/core"))["useGeolocation"];
+  const useI18n: (typeof import("vue-i18n"))["useI18n"];
   const useId: (typeof import("vue"))["useId"];
   const useIdle: (typeof import("@vueuse/core"))["useIdle"];
   const useImage: (typeof import("@vueuse/core"))["useImage"];
@@ -319,7 +320,6 @@ declare module "vue" {
   interface GlobalComponents {}
   interface ComponentCustomProperties {
     readonly EffectScope: UnwrapRef<(typeof import("vue"))["EffectScope"]>;
-    readonly ElMessage: UnwrapRef<(typeof import("element-plus/es"))["ElMessage"]>;
     readonly acceptHMRUpdate: UnwrapRef<(typeof import("pinia"))["acceptHMRUpdate"]>;
     readonly asyncComputed: UnwrapRef<(typeof import("@vueuse/core"))["asyncComputed"]>;
     readonly autoResetRef: UnwrapRef<(typeof import("@vueuse/core"))["autoResetRef"]>;
@@ -504,6 +504,7 @@ declare module "vue" {
     readonly useFullscreen: UnwrapRef<(typeof import("@vueuse/core"))["useFullscreen"]>;
     readonly useGamepad: UnwrapRef<(typeof import("@vueuse/core"))["useGamepad"]>;
     readonly useGeolocation: UnwrapRef<(typeof import("@vueuse/core"))["useGeolocation"]>;
+    readonly useI18n: UnwrapRef<(typeof import("vue-i18n"))["useI18n"]>;
     readonly useId: UnwrapRef<(typeof import("vue"))["useId"]>;
     readonly useIdle: UnwrapRef<(typeof import("@vueuse/core"))["useIdle"]>;
     readonly useImage: UnwrapRef<(typeof import("@vueuse/core"))["useImage"]>;

@@ -40,7 +40,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
       vue(),
       UnoCSS(),
       AutoImport({
-        imports: ["vue", "pinia", "vue-router", "@vueuse/core"],
+        imports: ["vue", "pinia", "vue-router", "@vueuse/core", "vue-i18n"],
         resolvers: [ElementPlusResolver({ importStyle: "sass" })],
         vueTemplate: true,
         dts: resolve(pathSrc, "types", "auto-imports.d.ts"), // 自动导入组建类型声明文件

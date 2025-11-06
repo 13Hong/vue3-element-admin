@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3 text-center m-0 mb-20px>登 录</h3>
+    <h3 text-center m-0 mb-20px>{{ t("login") }}</h3>
     <el-form
       :model="loginFormData"
       :rules="loginRules"
@@ -91,7 +91,9 @@ import type { FormInstance } from "element-plus";
 import AuthAPI from "@/api/auth-api";
 // import router from "@/router";
 
+const { t } = useI18n();
 // const route = useRoute();
+
 onMounted(() => getCaptcha());
 
 const loginFormRef = ref<FormInstance>();
