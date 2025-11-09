@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3 text-center m-0 mb-20px>{{ t("login") }}</h3>
+    <h3 text-center m-0 mb-20px>{{ t("login.login") }}</h3>
     <el-form
       :model="loginFormData"
       :rules="loginRules"
@@ -10,7 +10,7 @@
     >
       <!-- 用户名 -->
       <el-form-item prop="username">
-        <el-input v-model.trim="loginFormData.username" placeholder="请输入用户名">
+        <el-input v-model.trim="loginFormData.username" :placeholder="t('login.username')">
           <template #prefix>
             <el-icon><User /></el-icon>
           </template>
@@ -18,11 +18,11 @@
       </el-form-item>
 
       <!-- 密码 -->
-      <el-tooltip :visible="isCapsLock" content="大写锁定已打开" placement="right">
+      <el-tooltip :visible="isCapsLock" :content="t('login.capsLock')" placement="right">
         <el-form-item prop="password">
           <el-input
             v-model.trim="loginFormData.password"
-            placeholder="请输入密码"
+            :placeholder="t('login.password')"
             type="password"
             show-password
             @keyup="checkCapsLock"
@@ -40,7 +40,7 @@
         <div flex items-center gap-10px>
           <el-input
             v-model.trim="loginFormData.captchaCode"
-            placeholder="请输入验证码"
+            :placeholder="t('login.captchaCode')"
             clearbale
             class="flex-1"
             @keyup.enter="handleLoginSubmit"
@@ -65,22 +65,24 @@
       </el-form-item>
 
       <div flex-x-between w-full>
-        <el-checkbox v-model="loginFormData.rememberMe">记住我</el-checkbox>
+        <el-checkbox v-model="loginFormData.rememberMe">{{ t("login.rememberMe") }}</el-checkbox>
         <el-link type="primary" underline="never" @click="toOtherForm('resetPwd')">
-          忘记密码？
+          {{ t("login.forgetPassword") }}
         </el-link>
       </div>
 
       <!-- 登录按钮 -->
       <el-form-item>
         <el-button :loading="loading" type="primary" class="w-full" @click="handleLoginSubmit">
-          登 录
+          {{ t("login.login") }}
         </el-button>
       </el-form-item>
 
       <div flex-center gap-10px>
-        <el-text size="default">您没有帐号?</el-text>
-        <el-link type="primary" underline="never" @click="toOtherForm('register')">注册</el-link>
+        <el-text size="default">{{ t("login.noAccount") }}</el-text>
+        <el-link type="primary" underline="never" @click="toOtherForm('register')">
+          {{ t("login.reg") }}
+        </el-link>
       </div>
     </el-form>
   </div>
@@ -117,18 +119,18 @@ const loginRules = computed(() => {
       {
         required: true,
         trigger: "blur",
-        message: "请输入账户名",
+        message: t("login.message.username.required"),
       },
     ],
     password: [
       {
         required: true,
         trigger: "blur",
-        message: "请输入密码",
+        message: t("login.message.password.required"),
       },
       {
         min: 6,
-        message: "密码长度不能小于6位",
+        message: t("login.message.password.min"),
         trigger: "blur",
       },
     ],
@@ -136,7 +138,7 @@ const loginRules = computed(() => {
       {
         required: true,
         trigger: "blur",
-        message: "请输入验证码",
+        message: t("login.message.captchaCode.required"),
       },
     ],
   };
