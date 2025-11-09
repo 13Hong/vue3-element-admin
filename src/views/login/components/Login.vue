@@ -91,10 +91,12 @@
 <script setup lang="ts">
 import type { FormInstance } from "element-plus";
 import AuthAPI from "@/api/auth-api";
-// import router from "@/router";
+import { useUserStore } from "@/store";
+import router from "@/router";
 
 const { t } = useI18n();
-// const route = useRoute();
+const userStore = useUserStore();
+const route = useRoute();
 
 onMounted(() => getCaptcha());
 
@@ -172,8 +174,9 @@ async function handleLoginSubmit() {
     loading.value = true;
 
     // 2.执行登录
-    console.log(loginFormData.value);
-    console.log("登录提交");
+    await userStore.login(loginFormData.value);
+    const redirectPath = (route.query.redirect as string) || "/";
+    await router.push(decodeURIComponent(redirectPath));
   } catch (error) {
     getCaptcha();
     console.error("登录失败", error);
