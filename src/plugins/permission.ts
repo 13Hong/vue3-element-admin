@@ -1,6 +1,7 @@
 import router from "@/router";
 import { useUserStore } from "@/store";
 import NProgress from "@/utils/nprogress";
+// import type { RouteRecordRaw } from "vue-router";
 
 export function setupPermission() {
   const whiteList = ["/login"];
@@ -10,7 +11,6 @@ export function setupPermission() {
 
     try {
       const isLoggedIn = useUserStore().isLoggedIn();
-      console.log("这是to", to);
 
       // 未登录处理
       if (!isLoggedIn) {
@@ -18,7 +18,7 @@ export function setupPermission() {
           next();
         } else {
           next(`/login?redirect=${encodeURIComponent(to.fullPath)}`);
-          // NProgress.done()
+          NProgress.done();
         }
         return;
       }
@@ -34,7 +34,17 @@ export function setupPermission() {
 
       // 动态路由生成
       // if(!permissionStore.isRouteGenerated){
+      //   if(!userStore.userInfo?.roles?.length) {
+      //     await useUserStore.getUserInfo()
+      //   }
 
+      //   const dynamicRoutes = await permissionStore.generateRoutes()
+      //   dynamicRoutes.forEach((route:RouteRecordRaw) => {
+      //       router.addRoute(route)
+      //   });
+
+      //   next({ ...to,replace:true })
+      //   return
       // }
 
       // 路由404检查
@@ -43,13 +53,19 @@ export function setupPermission() {
         return;
       }
 
+      // 动态标题设置
+      const title = (to.params.title as string) || (to.query.title as string);
+      if (title) {
+        to.meta.title = title;
+      }
+
       next();
     } catch (error) {
       // 错误处理：重置状态并跳转登录
       console.error("Route guard error:", error);
       // await useUserStore.resetAllState()
       next("/login");
-      // NProgress.done()
+      NProgress.done();
     }
   });
 
