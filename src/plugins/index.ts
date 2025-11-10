@@ -3,6 +3,7 @@ import { setupRoute } from "@/router";
 import { setupStore } from "@/store";
 import { setupIcons } from "./icons";
 import { setupI18n } from "@/lang";
+import { setupPermission } from "./permission";
 
 export default {
   install(app: App<Element>) {
@@ -14,5 +15,7 @@ export default {
     setupIcons(app);
     // 国际化
     setupI18n(app);
+    // 路由守卫
+    setupPermission();
   },
 };
