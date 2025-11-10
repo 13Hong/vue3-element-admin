@@ -1,10 +1,13 @@
 import router from "@/router";
 import { useUserStore } from "@/store";
+import NProgress from "@/utils/nprogress";
 
 export function setupPermission() {
   const whiteList = ["/login"];
 
   router.beforeEach(async (to, from, next) => {
+    NProgress.start();
+
     try {
       const isLoggedIn = useUserStore().isLoggedIn();
       console.log("这是to", to);
@@ -51,6 +54,6 @@ export function setupPermission() {
   });
 
   router.afterEach(() => {
-    // NProgress.done()
+    NProgress.done();
   });
 }
