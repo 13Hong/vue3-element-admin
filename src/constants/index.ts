@@ -32,3 +32,10 @@ export const STORAGE_KEYS = {
 } as const;
 
 export const ROLE_ROOT = "ROOT"; // 超级管理员角色
+
+// 分组键集合（便于批量操作）
+export const AUTH_KEYS = {
+  ACCESS_TOKEN: STORAGE_KEYS.ACCESS_TOKEN,
+  REFRESH_TOKEN: STORAGE_KEYS.REFRESH_TOKEN,
+  REMEMBER_ME: STORAGE_KEYS.REMEMBER_ME,
+} as const;
