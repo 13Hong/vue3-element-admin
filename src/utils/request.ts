@@ -1,6 +1,7 @@
 import axios, { type InternalAxiosRequestConfig, type AxiosResponse } from "axios";
 import { ResultEnum } from "@/enums/api/result.enum";
 import { ElMessage } from "element-plus";
+import { AuthStorage } from "./auth";
 
 const service = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_API,
@@ -11,13 +12,13 @@ const service = axios.create({
 // 请求拦截器
 service.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    // const assessToken = getAccessToken();
+    const accessToken = AuthStorage.getAccessToken();
     // 如果 Authorizatio 设置为 no-auth,则不携带 token
-    // if(config.headers.Authorization !== 'no-auth' && accessToken ) {
-    //     config.headers.Authorization = `Bearer ${accessToken}`
-    // } else {
-    //     delete config.headers.Authorization
-    // }
+    if (config.headers.Authorization !== "no-auth" && accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    } else {
+      delete config.headers.Authorization;
+    }
     return config;
   },
   (error) => Promise.reject(error)

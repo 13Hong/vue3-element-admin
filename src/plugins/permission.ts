@@ -1,7 +1,7 @@
 import router from "@/router";
-import { useUserStore } from "@/store";
+import { useUserStore, usePermissionStore } from "@/store";
 import NProgress from "@/utils/nprogress";
-// import type { RouteRecordRaw } from "vue-router";
+import type { RouteRecordRaw } from "vue-router";
 
 export function setupPermission() {
   const whiteList = ["/login"];
@@ -29,23 +29,24 @@ export function setupPermission() {
         return;
       }
 
-      // const permissionStore = usePermissionStore()
-      // const userStore = useUserStore()
+      const permissionStore = usePermissionStore();
+      const userStore = useUserStore();
 
       // 动态路由生成
-      // if(!permissionStore.isRouteGenerated){
-      //   if(!userStore.userInfo?.roles?.length) {
-      //     await useUserStore.getUserInfo()
-      //   }
+      if (!permissionStore.isRouteGenerated) {
+        if (!userStore.userInfo?.roles?.length) {
+          await userStore.getUserInfo();
+        }
 
-      //   const dynamicRoutes = await permissionStore.generateRoutes()
-      //   dynamicRoutes.forEach((route:RouteRecordRaw) => {
-      //       router.addRoute(route)
-      //   });
+        const dynamicRoutes = await permissionStore.generateRoutes();
+        console.log(dynamicRoutes, "dynamicRoutes11111111");
+        dynamicRoutes.forEach((route: RouteRecordRaw) => {
+          router.addRoute(route);
+        });
 
-      //   next({ ...to,replace:true })
-      //   return
-      // }
+        next({ ...to, replace: true });
+        return;
+      }
 
       // 路由404检查
       if (to.matched.length === 0) {
@@ -63,7 +64,7 @@ export function setupPermission() {
     } catch (error) {
       // 错误处理：重置状态并跳转登录
       console.error("Route guard error:", error);
-      // await useUserStore.resetAllState()
+      await useUserStore().resetAllState();
       next("/login");
       NProgress.done();
     }

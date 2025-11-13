@@ -2,6 +2,7 @@
 import { AuthStorage } from "@/utils/auth";
 import AuthAPI, { type LoginFormData } from "@/api/auth-api";
 import UserAPI, { type UserInfo } from "@/api/system/user-api";
+import { usePermissionStoreHook } from "./permission.store";
 
 export const useUserStore = defineStore("user", () => {
   // 用户信息
@@ -54,9 +55,46 @@ export const useUserStore = defineStore("user", () => {
     });
   }
 
+  /**
+   * 重置所有系统状态
+   * 统一处理所有清理工作，包括用户凭证、路由、缓存等
+   */
+  function resetAllState() {
+    // 1. 重置用户状态
+    resetUserState();
+
+    // 2. 重置其他模块状态
+    // 重置路由
+    usePermissionStoreHook().resetRouter();
+    // 清除字典缓存
+    // useDictStoreHook().clearDictCache();
+    // 清除标签视图
+    // useTagsViewStore().delAllViews();
+
+    // 3. 清理 WebSocket 连接
+    // cleanupWebSocket();
+    console.log("[UserStore] WebSocket connections cleaned up");
+
+    return Promise.resolve();
+  }
+
+  /**
+   * 重置用户状态
+   * 仅处理用户模块内的状态
+   */
+  function resetUserState() {
+    // 清除用户凭证
+    AuthStorage.clearAuth();
+    // 重置用户信息
+    userInfo.value = {} as UserInfo;
+  }
+
   return {
+    userInfo,
+    rememberMe,
     login,
     isLoggedIn: () => !!AuthStorage.getAccessToken(),
     getUserInfo,
+    resetAllState,
   };
 });
