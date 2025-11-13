@@ -6,6 +6,7 @@
         <!-- logo -->
         <AppLogo v-if="isShowLogo" :collapse="!isSidebarOpen" />
         <!-- 主菜单内容 -->
+        <el-scrollbar></el-scrollbar>
       </div>
     </div>
     <!-- 内容区 -->

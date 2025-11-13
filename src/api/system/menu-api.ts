@@ -52,7 +52,7 @@ export interface RouteVO {
   /** 子路由列表 */
   children: RouteVO[];
   /** 组件路径 */
-  compoments?: string;
+  component?: string;
   /** 路由属性 */
   meta?: Meta;
   /** 路由名称 */

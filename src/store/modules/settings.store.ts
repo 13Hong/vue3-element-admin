@@ -52,6 +52,6 @@ export const useSettingsStore = defineStore("settings", () => {
  * 官方文档解释了如何在组件外部使用 Pinia Store：
  * https://pinia.vuejs.org/core-concepts/outside-component-usage.html#using-a-store-outside-of-a-component
  */
-export function useAppStoreHook() {
+export function useSettingsStoreHook() {
   return useSettingsStore(store);
 }
