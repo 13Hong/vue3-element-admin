@@ -56,6 +56,23 @@ export const useUserStore = defineStore("user", () => {
   }
 
   /**
+   * 登出
+   */
+  function logout() {
+    return new Promise<void>((resolve, reject) => {
+      AuthAPI.logout()
+        .then(() => {
+          // 重置所有系统状态
+          resetAllState();
+          resolve();
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+  /**
    * 重置所有系统状态
    * 统一处理所有清理工作，包括用户凭证、路由、缓存等
    */
@@ -73,7 +90,7 @@ export const useUserStore = defineStore("user", () => {
 
     // 3. 清理 WebSocket 连接
     // cleanupWebSocket();
-    console.log("[UserStore] WebSocket connections cleaned up");
+    // console.log("[UserStore] WebSocket connections cleaned up");
 
     return Promise.resolve();
   }
@@ -96,5 +113,6 @@ export const useUserStore = defineStore("user", () => {
     isLoggedIn: () => !!AuthStorage.getAccessToken(),
     getUserInfo,
     resetAllState,
+    logout,
   };
 });

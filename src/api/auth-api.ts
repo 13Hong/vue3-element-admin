@@ -20,6 +20,26 @@ const AuthAPI = {
     });
   },
 
+  /** 刷新 token 接口 */
+  refreshToken(refreshToken: string) {
+    return request<any, LoginResult>({
+      url: `${AUTH_BASE_URL}/refresh-token`,
+      method: "post",
+      params: { refreshToken },
+      headers: {
+        Authorization: "no-auth",
+      },
+    });
+  },
+
+  /** 退出登录接口 */
+  logout() {
+    return request({
+      url: `${AUTH_BASE_URL}/logout`,
+      method: "delete",
+    });
+  },
+
   /**
    * 获取验证码接口
    */

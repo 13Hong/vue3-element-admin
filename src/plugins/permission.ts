@@ -39,7 +39,7 @@ export function setupPermission() {
         }
 
         const dynamicRoutes = await permissionStore.generateRoutes();
-        console.log(dynamicRoutes, "dynamicRoutes11111111");
+
         dynamicRoutes.forEach((route: RouteRecordRaw) => {
           router.addRoute(route);
         });
