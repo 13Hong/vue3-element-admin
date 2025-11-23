@@ -20,6 +20,9 @@ importers:
       nprogress:
         specifier: ^0.2.0
         version: 0.2.0
+      path-browserify:
+        specifier: ^1.0.1
+        version: 1.0.1
       pinia:
         specifier: ^3.0.2
         version: 3.0.2(typescript@5.8.3)(vue@3.5.15(typescript@5.8.3))
@@ -51,6 +54,9 @@ importers:
       '@types/nprogress':
         specifier: ^0.2.3
         version: 0.2.3
+      '@types/path-browserify':
+        specifier: ^1.0.3
+        version: 1.0.3
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.33.1
         version: 8.33.1(@typescript-eslint/parser@8.33.1(eslint@9.28.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.28.0(jiti@2.4.2))(typescript@5.8.3)
@@ -766,6 +772,9 @@ packages:
 
   '@types/nprogress@0.2.3':
     resolution: {integrity: sha512-k7kRA033QNtC+gLc4VPlfnue58CM1iQLgn1IMAU8VPHGOj7oIHPp9UlhedEnD/Gl8evoCjwkZjlBORtZ3JByUA==}
+
+  '@types/path-browserify@1.0.3':
+    resolution: {integrity: sha512-ZmHivEbNCBtAfcrFeBCiTjdIc2dey0l7oCGNGpSuRTy8jP6UVND7oUowlvDujBy8r2Hoa8bfFUOCiPWfmtkfxw==}
 
   '@types/web-bluetooth@0.0.16':
     resolution: {integrity: sha512-oh8q2Zc32S6gd/j50GowEjKLoOVOwHP/bWVjKJInBwQqdOYMdPrf1oVlelTlyfFK3CKxL1uahMDAr+vy8T7yMQ==}
@@ -3415,6 +3424,8 @@ snapshots:
       undici-types: 6.21.0
 
   '@types/nprogress@0.2.3': {}
+
+  '@types/path-browserify@1.0.3': {}
 
   '@types/web-bluetooth@0.0.16': {}
 

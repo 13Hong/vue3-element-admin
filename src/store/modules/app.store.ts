@@ -16,7 +16,7 @@ export const useAppStore = defineStore("app", () => {
   // 语言
   const language = useStorage(STORAGE_KEYS.LANGUAGE, defaultSettings.language);
   // 侧边栏状态
-  const sidebarStatus = useStorage(STORAGE_KEYS.SIDEBAR_STATUS, SidebarStatus.CLOSED);
+  const sidebarStatus = useStorage(STORAGE_KEYS.SIDEBAR_STATUS, SidebarStatus.OPENED);
   const sidebar = reactive({
     opened: sidebarStatus.value === SidebarStatus.OPENED,
     withoutAnimation: false,

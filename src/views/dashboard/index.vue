@@ -1,4 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+defineOptions({
+  name: "Dashboard",
+  inheritAttrs: false,
+});
+</script>
 
 <template>
   <div>

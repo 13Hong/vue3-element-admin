@@ -7,7 +7,9 @@ export {};
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AppLink: typeof import('./../components/AppLink/index.vue')['default']
     AppLogo: typeof import('./../layout/components/AppLogo/index.vue')['default']
+    BasicMenu: typeof import('./../layout/components/Menu/BasicMenu.vue')['default']
     ElBadge: typeof import('element-plus/es')['ElBadge']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
@@ -18,11 +20,16 @@ declare module 'vue' {
     ElImage: typeof import('element-plus/es')['ElImage']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElLink: typeof import('element-plus/es')['ElLink']
+    ElMenu: typeof import('element-plus/es')['ElMenu']
+    ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
+    ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
     ElText: typeof import('element-plus/es')['ElText']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
     HelloWorld: typeof import('./../components/HelloWorld.vue')['default']
     Login: typeof import('./../views/login/components/Login.vue')['default']
+    MenuItem: typeof import('./../layout/components/Menu/components/MenuItem.vue')['default']
+    MenuItemContent: typeof import('./../layout/components/Menu/components/MenuItemContent.vue')['default']
     Register: typeof import('./../views/login/components/Register.vue')['default']
     ResetPwd: typeof import('./../views/login/components/ResetPwd.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

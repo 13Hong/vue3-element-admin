@@ -6,7 +6,9 @@
         <!-- logo -->
         <AppLogo v-if="isShowLogo" :collapse="!isSidebarOpen" />
         <!-- 主菜单内容 -->
-        <el-scrollbar></el-scrollbar>
+        <el-scrollbar>
+          <BasicMenu :data="routes" base-path="" />
+        </el-scrollbar>
       </div>
     </div>
     <!-- 内容区 -->
@@ -16,10 +18,14 @@
 <script lang="ts" setup>
 import BaseLayout from "../base/index.vue";
 import AppLogo from "../../components/AppLogo/index.vue";
-import { useLayout } from "@/composables";
+import BasicMenu from "../../components/Menu/BasicMenu.vue";
+import { useLayout, useLayoutMenu } from "@/composables";
 
 // 布局相关参数
 const { isShowLogo, isSidebarOpen } = useLayout();
+
+// 菜单相关
+const { routes } = useLayoutMenu();
 </script>
 
 <style lang="scss" scoped>
