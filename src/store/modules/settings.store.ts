@@ -1,15 +1,16 @@
 import { defaultSettings } from "@/settings";
-import { ThemeMode } from "@/enums/settings/theme.enum";
+import { SidebarColor, ThemeMode } from "@/enums/settings/theme.enum";
 import { LayoutMode } from "@/enums/settings/layout.enum";
 import { defineStore } from "pinia";
 import { useStorage } from "@vueuse/core";
 import { STORAGE_KEYS } from "@/constants";
 import { store } from "@/store";
+import { toggleSidebarColor } from "@/utils/theme";
 
 export const useSettingsStore = defineStore("settings", () => {
   // 侧边栏配色方案 (经典蓝/极简白)
   const sidebarColorScheme = useStorage<string>(
-    "sidebarColorScheme",
+    STORAGE_KEYS.SIDEBAR_COLOR_SCHEME,
     defaultSettings.sidebarColorScheme
   );
   // 布局
@@ -36,6 +37,20 @@ export const useSettingsStore = defineStore("settings", () => {
     defaultSettings.showTagsView
   );
 
+  // 监听侧边栏配色变化
+  watch(
+    [sidebarColorScheme],
+    ([newSidebarColorScheme]) => {
+      toggleSidebarColor(newSidebarColorScheme === SidebarColor.CLASSIC_BLUE);
+    },
+    { immediate: true }
+  );
+
+  // 主题更新方法
+  function updateSidebarColorScheme(newScheme: string) {
+    sidebarColorScheme.value = newScheme;
+  }
+
   return {
     sidebarColorScheme,
     layout,
@@ -44,6 +59,7 @@ export const useSettingsStore = defineStore("settings", () => {
     showAppLogo,
     showWatermark,
     showTagsView,
+    updateSidebarColorScheme,
   };
 });
 
