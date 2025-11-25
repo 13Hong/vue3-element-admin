@@ -7,6 +7,8 @@ import parserTypeScript from "@typescript-eslint/parser";
 import vueParser from "vue-eslint-parser";
 import globals from "globals";
 import configPrettier from "eslint-config-prettier";
+// TypeScript支持
+import * as typescriptEslint from "typescript-eslint";
 
 // 解析自动导入配置
 import fs from "node:fs";
@@ -52,6 +54,15 @@ const elementPlusComponents = {
 };
 
 export default [
+  // TypeScript 推荐配置
+  ...typescriptEslint.configs.recommended,
+
+  // Vue 推荐配置
+  ...pluginVue.configs["flat/recommended"],
+
+  // 基础 JavaScript 配置
+  eslint.configs.recommended,
+
   // 全局配置
   {
     // 指定要检查的文件
@@ -81,24 +92,27 @@ export default [
       },
     },
     rules: {
-      // 全局规则
-      "no-unused-vars": [
-        "error",
-        {
-          vars: "all",
-          args: "after-used",
-          ignoreRestSiblings: true,
-          argsIgnorePattern: "^_", // 忽略以下划线开头的参数
-          varsIgnorePattern: "^[A-Z][A-Z0-9_]*$", // 忽略全大写的常量/枚举
-        },
-      ],
-      // 禁用未定义变量检查，TypeScript 已处理类型检查
+      // 基础规则
+      "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
+      "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
+
+      // ES6+ 规则
+      "prefer-const": "error",
+      "no-var": "error",
+      "object-shorthand": "error",
+
+      // 最佳实践
+      eqeqeq: "off",
+      "no-multi-spaces": "error",
+      "no-multiple-empty-lines": ["error", { max: 1, maxBOF: 0, maxEOF: 0 }],
+
+      // 禁用与 TypeScript 冲突的规则
+      "no-unused-vars": "off",
       "no-undef": "off",
+      "no-redeclare": "off",
+      "@typescript-eslint/ban-ts-comment": "off",
     },
   },
-
-  // 基础 JavaScript 配置
-  eslint.configs.recommended,
 
   // Vue 配置
   {
@@ -136,9 +150,6 @@ export default [
   // TypeScript 配置
   {
     files: ["**/*.ts", "**/*.tsx", "**/*.vue"],
-    plugins: {
-      "@typescript-eslint": pluginTypeScript,
-    },
     rules: {
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-empty-function": "off",
@@ -146,15 +157,16 @@ export default [
       "@typescript-eslint/ban-ts-comment": "off",
       "@typescript-eslint/no-non-null-assertion": "off",
       "@typescript-eslint/no-unused-vars": [
-        "error",
+        "warn",
         {
           vars: "all",
           args: "after-used",
           ignoreRestSiblings: true,
           argsIgnorePattern: "^_", // 忽略以下划线开头的参数
-          varsIgnorePattern: "^[A-Z][A-Z0-9_]*$", // 忽略全大写的常量/枚举
+          varsIgnorePattern: "^(_|[A-Z][A-Z0-9_]*$)", // 忽略下划线开头的变量和全大写的常量/枚举
         },
       ],
+      "@typescript-eslint/no-unused-expressions": "warn",
     },
   },
 

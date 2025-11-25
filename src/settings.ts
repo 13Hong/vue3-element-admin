@@ -45,5 +45,5 @@ export const authConfig = {
    *
    * 适用场景：后端没有刷新接口或不需要自动刷新的项目可设为false
    */
-  enableTokenRefresh: false,
+  enableTokenRefresh: true,
 } as const;

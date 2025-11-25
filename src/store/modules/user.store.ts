@@ -1,4 +1,4 @@
-// import { store } from "@/store";
+import { store } from "@/store";
 import { AuthStorage } from "@/utils/auth";
 import AuthAPI, { type LoginFormData } from "@/api/auth-api";
 import UserAPI, { type UserInfo } from "@/api/system/user-api";
@@ -106,6 +106,32 @@ export const useUserStore = defineStore("user", () => {
     userInfo.value = {} as UserInfo;
   }
 
+  /**
+   * 刷新 Token
+   */
+  function refreshToken() {
+    const refreshToken = AuthStorage.getRefreshToken();
+
+    if (!refreshToken) {
+      return Promise.reject(new Error("没有有效的刷新令牌"));
+    }
+
+    return new Promise<void>((resolve, reject) => {
+      AuthAPI.refreshToken(refreshToken)
+        .then((data) => {
+          const { accessToken, refreshToken: newRefreshToken } = data;
+
+          // 更新令牌，保持当前记住我状态
+          AuthStorage.setTokens(accessToken, newRefreshToken, AuthStorage.getRememberMe());
+          resolve();
+        })
+        .catch((error) => {
+          console.log("RefreshToken 刷新失败", error);
+          reject(error);
+        });
+    });
+  }
+
   return {
     userInfo,
     rememberMe,
@@ -114,5 +140,15 @@ export const useUserStore = defineStore("user", () => {
     getUserInfo,
     resetAllState,
     logout,
+    refreshToken,
   };
 });
+
+/**
+ * 用于在组件外部（如在Pinia Store 中）使用 Pinia 提供的 store 实例。
+ * 官方文档解释了如何在组件外部使用 Pinia Store：
+ * https://pinia.vuejs.org/core-concepts/outside-component-usage.html#using-a-store-outside-of-a-component
+ */
+export function useUserStoreHook() {
+  return useUserStore(store);
+}

@@ -2,9 +2,9 @@
   <div>
     <h3 text-center m-0 mb-20px>{{ t("login.login") }}</h3>
     <el-form
+      ref="loginFormRef"
       :model="loginFormData"
       :rules="loginRules"
-      ref="loginFormRef"
       size="large"
       :validate-on-rule-change="false"
     >

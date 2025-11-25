@@ -13,7 +13,7 @@ const i18n = createI18n({
   legacy: false, // 启用 Composition API 模式
   locale: "zh-cn", // 设置当前语言
   globalInjection: true, // 全局注册 $t 函数
-  messages: messages,
+  messages,
 });
 
 // 全局注册

@@ -86,6 +86,7 @@
     "stylelint-config-recommended-vue": "^1.6.0",
     "stylelint-prettier": "^5.0.3",
     "typescript": "~5.8.3",
+    "typescript-eslint": "^8.48.0",
     "unocss": "^66.1.2",
     "unplugin-auto-import": "^19.2.0",
     "unplugin-vue-components": "^28.5.0",
