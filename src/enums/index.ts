@@ -1,4 +1,4 @@
-export * from "./api/result.enum";
+export * from "./api/code.enum";
 
 export * from "./settings/layout.enum";
 export * from "./settings/theme.enum";

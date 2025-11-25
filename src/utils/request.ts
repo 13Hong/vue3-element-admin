@@ -1,7 +1,7 @@
 import axios, { type InternalAxiosRequestConfig, type AxiosResponse } from "axios";
-import { ResultEnum } from "@/enums/api/result.enum";
-import { ElMessage } from "element-plus";
+import { ApiCodeEnum } from "@/enums/api/code.enum";
 import { AuthStorage } from "./auth";
+// import { authConfig } from "@/settings";
 
 const service = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_API,
@@ -28,32 +28,57 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response: AxiosResponse) => {
     // 如果响应的是二进制流，直接返回 例：下载文件， Excel 导出
-    if (response.config.responseType === "blob") {
+    if (response.config.responseType === "blob" || response.config.responseType === "arraybuffer") {
       return response;
     }
     const { code, data, msg } = response.data;
-    if (code === ResultEnum.SUCCESS) {
+
+    // 请求成功
+    if (code === ApiCodeEnum.SUCCESS) {
       return data;
     }
+
+    // 业务错误
     ElMessage.error(msg || "系统出错");
     return Promise.reject(new Error(msg || "Error"));
   },
   async (error) => {
     console.error("request error", error); // for debug
-    const { response } = error;
-    if (response) {
-      const { code, msg } = response.data;
-      if (code === ResultEnum.ACCESS_TOKEN_INVALID) {
-        // 刷新 Token 过期，刷新Token
-        // return handleTokenRefresh(config)
-      } else if (code === ResultEnum.REFRESH_TOKEN_INVALID) {
-        // await handleSessionExpired()
-        return Promise.reject(new Error(msg || "Error"));
-      } else {
-        ElMessage.error("系统出错");
-      }
+
+    const { response, config } = error;
+
+    console.log("response", response);
+    console.log("config", config);
+
+    // 网络错误或服务器未响应
+    if (!response) {
+      ElMessage.error("网络连接失败，请检查网络设置");
+      return Promise.reject(error);
     }
-    return Promise.reject(error.message);
+
+    const { code, msg } = response.data;
+
+    switch (code) {
+      // case ApiCodeEnum.ACCESS_TOKEN_INVALID:
+      //   // Access Token 过期
+      //   if(authConfig.enableTokenRefresh) {
+      //     // 启用了token刷新，尝试刷新
+      //     return refreshTokenAndRetry(config, httpRequest)
+      //   } else {
+      //     // 未启用token刷新，直接跳转登录页
+      //     await redirectToLogin("登录已过期，请重新登录")
+      //     return Promise.reject(new Error(msg || "Access Token Invalid"))
+      //   }
+
+      case ApiCodeEnum.REFRESH_TOKEN_INVALID:
+        // Refresh Token 过期，跳转登录页
+        // await redirectToLogin("登录已过期，请重新登录");
+        return Promise.reject(new Error(msg || "Refresh Token Invalid"));
+
+      default:
+        ElMessage.error(msg || "系统出错");
+        return Promise.reject(new Error(msg || "Error"));
+    }
   }
 );
 
