@@ -4,7 +4,7 @@
       <!-- 菜单折叠按钮 -->
       <Hamburger :is-active="isSidebarOpen" @toggle-click="toggleSideBar" />
       <!-- 面包屑导航 -->
-      <!-- <Breadcrumb /> -->
+      <Breadcrumb />
     </div>
     <!-- 导航栏操作区域 -->
     <div class="navbar__actions"></div>
