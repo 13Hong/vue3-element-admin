@@ -12,6 +12,15 @@
       </div>
     </div>
     <!-- 内容区 -->
+    <div
+      :class="{
+        hasTagsView: isShowTagsView,
+        'layout__main--collapsed': !isSidebarOpen,
+      }"
+      class="layout__main"
+    >
+      <NavBar />
+    </div>
   </BaseLayout>
 </template>
 
@@ -19,10 +28,11 @@
 import BaseLayout from "../base/index.vue";
 import AppLogo from "../../components/AppLogo/index.vue";
 import BasicMenu from "../../components/Menu/BasicMenu.vue";
+import NavBar from "../../components/NavBar/index.vue";
 import { useLayout, useLayoutMenu } from "@/composables";
 
 // 布局相关参数
-const { isShowLogo, isSidebarOpen } = useLayout();
+const { isShowLogo, isSidebarOpen, isShowTagsView } = useLayout();
 
 // 菜单相关
 const { routes } = useLayoutMenu();
