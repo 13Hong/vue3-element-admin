@@ -20,6 +20,7 @@
       class="layout__main"
     >
       <NavBar />
+      <AppMain />
     </div>
   </BaseLayout>
 </template>
@@ -30,6 +31,7 @@ import AppLogo from "../../components/AppLogo/index.vue";
 import BasicMenu from "../../components/Menu/BasicMenu.vue";
 import NavBar from "../../components/NavBar/index.vue";
 import { useLayout, useLayoutMenu } from "@/composables";
+import AppMain from "../../components/AppMain/index.vue";
 
 // 布局相关参数
 const { isShowLogo, isSidebarOpen, isShowTagsView } = useLayout();

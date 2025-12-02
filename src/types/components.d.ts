@@ -9,8 +9,10 @@ declare module 'vue' {
   export interface GlobalComponents {
     AppLink: typeof import('./../components/AppLink/index.vue')['default']
     AppLogo: typeof import('./../layout/components/AppLogo/index.vue')['default']
+    AppMain: typeof import('./../layout/components/AppMain/index.vue')['default']
     BasicMenu: typeof import('./../layout/components/Menu/BasicMenu.vue')['default']
     Breadcrumb: typeof import('./../components/Breadcrumb/index.vue')['default']
+    ElBacktop: typeof import('element-plus/es')['ElBacktop']
     ElBadge: typeof import('element-plus/es')['ElBadge']
     ElBreadcrumb: typeof import('element-plus/es')['ElBreadcrumb']
     ElBreadcrumbItem: typeof import('element-plus/es')['ElBreadcrumbItem']
