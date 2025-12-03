@@ -1,4 +1,4 @@
-import { defineConfig, presetTypography, presetIcons } from "unocss";
+import { defineConfig, presetTypography, presetIcons, presetUno } from "unocss";
 import presetMini from "@unocss/preset-mini";
 import presetAttributify from "@unocss/preset-attributify";
 
@@ -45,6 +45,7 @@ export default defineConfig({
     ),
   },
   presets: [
+    presetUno(),
     presetMini(),
     presetAttributify(),
     presetTypography(),
