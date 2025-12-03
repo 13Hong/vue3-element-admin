@@ -1,8 +1,8 @@
 export const useTagsViewStore = defineStore("tagsView", () => {
   const visitedViews = ref<TagView[]>([]);
   const cachedViews = ref<string[]>([]);
-  // const router = useRouter();
-  // const route = useRoute();
+  const router = useRouter();
+  const route = useRoute();
 
   /**
    * 添加已访问视图到已访问视图列表中
@@ -64,6 +64,61 @@ export const useTagsViewStore = defineStore("tagsView", () => {
     });
   }
 
+  function delView(view: TagView) {
+    return new Promise((resolve) => {
+      delVisitedView(view);
+      delCachedView(view);
+      resolve({
+        visitedViews: [...visitedViews.value],
+        cachedViews: [...cachedViews.value],
+      });
+    });
+  }
+
+  function updateVisitedView(view: TagView) {
+    for (let v of visitedViews.value) {
+      if (v.path === view.path) {
+        v = Object.assign(v, view);
+        break;
+      }
+    }
+  }
+
+  /**
+   * 根据路径更新标签名称
+   * @param fullPath 路径
+   * @param title 标签名称
+   */
+  function updateTagName(fullPath: string, title: string) {
+    const tag = visitedViews.value.find((tag: TagView) => tag.fullPath === fullPath);
+
+    if (tag) {
+      tag.title = title;
+    }
+  }
+
+  function addView(view: TagView) {
+    addVisitedView(view);
+    addCachedView(view);
+  }
+
+  function isActive(tag: TagView) {
+    return tag.path === route.path;
+  }
+
+  function toLastView(visitedViews: TagView[], view?: TagView) {
+    const latestView = visitedViews.slice(-1)[0];
+    if (latestView && latestView.fullPath) {
+      router.push(latestView.fullPath);
+    } else {
+      if (view?.name === "Dashboard") {
+        router.replace("/redirect" + view.fullPath);
+      } else {
+        router.push("/");
+      }
+    }
+  }
+
   return {
     visitedViews,
     cachedViews,
@@ -71,5 +126,11 @@ export const useTagsViewStore = defineStore("tagsView", () => {
     addCachedView,
     delVisitedView,
     delCachedView,
+    updateVisitedView,
+    updateTagName,
+    addView,
+    isActive,
+    toLastView,
+    delView,
   };
 });

@@ -20,6 +20,7 @@
       class="layout__main"
     >
       <NavBar />
+      <TagsView v-if="isShowTagsView" />
       <AppMain />
     </div>
   </BaseLayout>
@@ -32,6 +33,7 @@ import BasicMenu from "../../components/Menu/BasicMenu.vue";
 import NavBar from "../../components/NavBar/index.vue";
 import { useLayout, useLayoutMenu } from "@/composables";
 import AppMain from "../../components/AppMain/index.vue";
+import TagsView from "../../components/TagsView/index.vue";
 
 // 布局相关参数
 const { isShowLogo, isSidebarOpen, isShowTagsView } = useLayout();
