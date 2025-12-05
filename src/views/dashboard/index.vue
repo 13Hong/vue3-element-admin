@@ -193,7 +193,7 @@
                       <Top v-if="visitStatsData.uvGrowthRate > 0" />
                       <Bottom v-if="visitStatsData.uvGrowthRate < 0" />
                     </el-icon>
-                    {{ 2 }}
+                    {{ formatGrowthRate(visitStatsData.uvGrowthRate) }}
                   </span>
                 </div>
                 <div class="i-svg:visitor w-8 h-8" />
@@ -217,6 +217,7 @@
 <script setup lang="ts">
 import { useUserStore } from "@/store";
 import { Connection } from "@element-plus/icons-vue";
+import { formatGrowthRate } from "@/utils";
 
 defineOptions({
   name: "Dashboard",

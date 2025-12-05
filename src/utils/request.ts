@@ -4,7 +4,7 @@ import { AuthStorage } from "./auth";
 import { authConfig } from "@/settings";
 import { useTokenRefresh } from "@/composables/auth/useTokenRefresh";
 import { redirectToLogin } from "@/utils/auth";
-
+import qs from "qs";
 // 初始化token刷新组合式函数
 const { refreshTokenAndRetry } = useTokenRefresh();
 
@@ -12,6 +12,7 @@ const service = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_API,
   timeout: 50000,
   headers: { "Content-Type": "application/json;charset=utf-8" },
+  paramsSerializer: (params) => qs.stringify(params),
 });
 
 // 请求拦截器
