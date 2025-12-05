@@ -110,11 +110,113 @@
         </div>
       </div>
     </el-card>
+
+    <!-- 数据统计 -->
+    <el-row :gutter="10" class="mt-5">
+      <!-- 在线用户 -->
+      <el-col :span="8" :xs="24" class="mb-3 sm:mb-0">
+        <el-card shadow="never" class="h-full flex flex-col">
+          <template #header>
+            <div class="flex-x-between">
+              <span class="text-gray">在线用户</span>
+              <el-tag type="danger" size="small">实时</el-tag>
+            </div>
+          </template>
+
+          <div class="flex-x-between mt-2 flex-1">
+            <div class="flex-y-center">
+              <span class="text-lg transition-all duration-300 hover:scale-110">
+                {{ 0 }}
+              </span>
+              <span class="ml-2 text-xs text-[#67c23a]">
+                <el-icon><Connection /></el-icon>
+                已连接
+              </span>
+              <!-- <span v-else class="ml-2 text-xs text-[#f56c6c]">
+                <el-icon><Failed /></el-icon>
+                未连接
+              </span> -->
+            </div>
+            <div class="i-svg:people w-8 h-8 animate-[pulse_2s_infinite]" />
+          </div>
+
+          <div class="flex-x-between mt-2 text-sm text-gray">
+            <span>更新时间</span>
+            <span>{{ 0 }}</span>
+          </div>
+        </el-card>
+      </el-col>
+
+      <!-- 访客数 -->
+      <el-col :span="8" :xs="24" class="mb-3 sm:mb-0">
+        <el-skeleton :loading="visitStatusLoading" :row="5" animated>
+          <template #template>
+            <el-card>
+              <template #header>
+                <div>
+                  <el-skeleton-item variant="h3" style="width: 40%" />
+                  <el-skeleton-item variant="rect" style="float: right; width: 1em; height: 1em" />
+                </div>
+              </template>
+
+              <div class="flex-x-between">
+                <el-skeleton-item variant="text" style="width: 30%" />
+                <el-skeleton-item variant="circle" style="width: 2em; height: 2em" />
+              </div>
+              <div class="flex-x-between mt-5">
+                <el-skeleton-item variant="text" style="width: 50%" />
+                <el-skeleton-item variant="text" style="width: 1em" />
+              </div>
+            </el-card>
+          </template>
+
+          <template v-if="!visitStatusLoading">
+            <el-card shadow="never" class="h-full flex flex-col">
+              <template #header>
+                <div class="flex-x-between">
+                  <span class="text-gray">访客数(UV)</span>
+                  <el-tag type="success" size="small">日</el-tag>
+                </div>
+              </template>
+
+              <div class="flex-x-between mt-2 flex-1">
+                <div class="flex-y-center">
+                  <span class="text-lg">{{ Math.round(transitionUvCount) }}</span>
+                  <span
+                    :class="[
+                      'text-xs',
+                      'ml-2',
+                      computeGrowthRateClass(visitStatsData.uvGrowthRate),
+                    ]"
+                  >
+                    <el-icon>
+                      <Top v-if="visitStatsData.uvGrowthRate > 0" />
+                      <Bottom v-if="visitStatsData.uvGrowthRate < 0" />
+                    </el-icon>
+                    {{ 2 }}
+                  </span>
+                </div>
+                <div class="i-svg:visitor w-8 h-8" />
+              </div>
+
+              <div class="flex-x-between mt-2 text-sm text-gray">
+                <span>总访客数</span>
+                <span>{{ Math.round(transitionTotalUvCount) }}</span>
+              </div>
+            </el-card>
+          </template>
+        </el-skeleton>
+      </el-col>
+
+      <!-- 浏览量 -->
+      <el-col :span="8" :xs="24"></el-col>
+    </el-row>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useUserStore } from "@/store";
+import { Connection } from "@element-plus/icons-vue";
 
 defineOptions({
   name: "Dashboard",
@@ -141,6 +243,53 @@ const greetings = computed(() => {
     return "偷偷向银河要了一把碎星，只等你闭上眼睛撒入你的梦中，晚安🌛！";
   }
 });
+
+// 访客统计数据加载状态
+const visitStatusLoading = ref(false);
+// 访客统计数据
+const visitStatsData = ref({
+  todayUvCount: 0,
+  uvGrowthRate: 0,
+  totalUvCount: 0,
+  todayPvCount: 0,
+  pvGrowthRate: 0,
+  totalPvCount: 0,
+});
+
+// 数字过渡动画
+const transitionUvCount = useTransition(
+  computed(() => visitStatsData.value.todayUvCount),
+  {
+    duration: 1000,
+    transition: [0.25, 0.1, 0.25, 1.0], // CSS cubic-bezier
+  }
+);
+
+const transitionTotalUvCount = useTransition(
+  computed(() => visitStatsData.value.totalUvCount),
+  {
+    duration: 1200,
+    transition: [0.25, 0.1, 0.25, 1.0],
+  }
+);
+
+/**
+ * 根据增长率计算对应的 CSS 类名
+ *
+ * @param growthRate - 增长率数值
+ */
+const computeGrowthRateClass = (growthRate?: number): string => {
+  if (!growthRate) {
+    return "text-[--el-color-info]";
+  }
+  if (growthRate > 0) {
+    return "text-[--el-color-danger]";
+  } else if (growthRate < 0) {
+    return "text-[--el-color-success]";
+  } else {
+    return "text-[--el-color-info]";
+  }
+};
 </script>
 
 <style lang="scss" scoped>
