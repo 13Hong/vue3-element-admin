@@ -149,7 +149,7 @@
 
       <!-- 访客数 -->
       <el-col :span="8" :xs="24" class="mb-3 sm:mb-0">
-        <el-skeleton :loading="visitStatusLoading" :row="5" animated>
+        <el-skeleton :loading="visitStatsLoading" :row="5" animated>
           <template #template>
             <el-card>
               <template #header>
@@ -170,7 +170,7 @@
             </el-card>
           </template>
 
-          <template v-if="!visitStatusLoading">
+          <template v-if="!visitStatsLoading">
             <el-card shadow="never" class="h-full flex flex-col">
               <template #header>
                 <div class="flex-x-between">
@@ -209,7 +209,63 @@
       </el-col>
 
       <!-- 浏览量 -->
-      <el-col :span="8" :xs="24"></el-col>
+      <el-col :span="8" :xs="24">
+        <el-skeleton :loading="visitStatsLoading" :rows="5" animated>
+          <template #template>
+            <el-card>
+              <template #header>
+                <div>
+                  <el-skeleton variant="h3" style="width: 40%" />
+                  <el-skeleton variant="rect" style="float: right; width: 1em; height: 1em" />
+                </div>
+              </template>
+
+              <div class="flex-x-between">
+                <el-skeleton variant="text" style="width: 30%" />
+                <el-skeleton variant="circle" style=" width: 2em;height: 2em" />
+              </div>
+              <div class="flex-x-between">
+                <el-skeleton variant="text" style="width: 50%" />
+                <el-skeleton variant="text" style="width: 1em" />
+              </div>
+            </el-card>
+          </template>
+          <template v-if="!visitStatsLoading">
+            <el-card shadow="never" class="h-full flex flex-col">
+              <template #header>
+                <div class="flex-x-between">
+                  <span class="text-gray">浏览量(PV)</span>
+                  <el-tag type="primary" size="small">日</el-tag>
+                </div>
+              </template>
+              <div class="flex-x-between mt-2 flex-1">
+                <div class="flex-y-center">
+                  <span class="text-lg">{{ Math.round(transitionPvCount) }}</span>
+                  <span
+                    :class="[
+                      'text-xs',
+                      'ml-2',
+                      computeGrowthRateClass(visitStatsData.pvGrowthRate),
+                    ]"
+                  >
+                    <el-icon>
+                      <Top v-if="visitStatsData.pvGrowthRate > 0" />
+                      <Bottom v-if="visitStatsData.pvGrowthRate < 0" />
+                    </el-icon>
+                    {{ formatGrowthRate(visitStatsData.pvGrowthRate) }}
+                  </span>
+                </div>
+                <div class="i-svg:browser w-8 h-8" />
+              </div>
+
+              <div class="flex-x-between mt-2 text-sm text-gray">
+                <span>总浏览器</span>
+                <span>{{ Math.round(transitionTotalPvCount) }}</span>
+              </div>
+            </el-card>
+          </template>
+        </el-skeleton>
+      </el-col>
     </el-row>
   </div>
 </template>
@@ -246,7 +302,7 @@ const greetings = computed(() => {
 });
 
 // 访客统计数据加载状态
-const visitStatusLoading = ref(false);
+const visitStatsLoading = ref(false);
 // 访客统计数据
 const visitStatsData = ref({
   todayUvCount: 0,
@@ -268,6 +324,22 @@ const transitionUvCount = useTransition(
 
 const transitionTotalUvCount = useTransition(
   computed(() => visitStatsData.value.totalUvCount),
+  {
+    duration: 1200,
+    transition: [0.25, 0.1, 0.25, 1.0],
+  }
+);
+
+const transitionPvCount = useTransition(
+  computed(() => visitStatsData.value.todayPvCount),
+  {
+    duration: 1000,
+    transition: [0.25, 0.1, 0.25, 1.0],
+  }
+);
+
+const transitionTotalPvCount = useTransition(
+  computed(() => visitStatsData.value.totalPvCount),
   {
     duration: 1200,
     transition: [0.25, 0.1, 0.25, 1.0],
