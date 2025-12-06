@@ -222,7 +222,7 @@
 
               <div class="flex-x-between">
                 <el-skeleton variant="text" style="width: 30%" />
-                <el-skeleton variant="circle" style=" width: 2em;height: 2em" />
+                <el-skeleton variant="circle" style="width: 2em; height: 2em" />
               </div>
               <div class="flex-x-between">
                 <el-skeleton variant="text" style="width: 50%" />
