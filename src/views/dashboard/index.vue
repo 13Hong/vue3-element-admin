@@ -215,18 +215,18 @@
             <el-card>
               <template #header>
                 <div>
-                  <el-skeleton variant="h3" style="width: 40%" />
-                  <el-skeleton variant="rect" style="float: right; width: 1em; height: 1em" />
+                  <el-skeleton-item variant="h3" style="width: 40%" />
+                  <el-skeleton-item variant="rect" style="float: right; width: 1em; height: 1em" />
                 </div>
               </template>
 
               <div class="flex-x-between">
-                <el-skeleton variant="text" style="width: 30%" />
-                <el-skeleton variant="circle" style="width: 2em; height: 2em" />
+                <el-skeleton-item variant="text" style="width: 30%" />
+                <el-skeleton-item variant="circle" style="width: 2em; height: 2em" />
               </div>
-              <div class="flex-x-between">
-                <el-skeleton variant="text" style="width: 50%" />
-                <el-skeleton variant="text" style="width: 1em" />
+              <div class="mt-5 flex-x-between">
+                <el-skeleton-item variant="text" style="width: 50%" />
+                <el-skeleton-item variant="text" style="width: 1em" />
               </div>
             </el-card>
           </template>
@@ -238,6 +238,7 @@
                   <el-tag type="primary" size="small">日</el-tag>
                 </div>
               </template>
+
               <div class="flex-x-between mt-2 flex-1">
                 <div class="flex-y-center">
                   <span class="text-lg">{{ Math.round(transitionPvCount) }}</span>
@@ -250,7 +251,7 @@
                   >
                     <el-icon>
                       <Top v-if="visitStatsData.pvGrowthRate > 0" />
-                      <Bottom v-if="visitStatsData.pvGrowthRate < 0" />
+                      <Bottom v-else-if="visitStatsData.pvGrowthRate < 0" />
                     </el-icon>
                     {{ formatGrowthRate(visitStatsData.pvGrowthRate) }}
                   </span>
@@ -259,12 +260,30 @@
               </div>
 
               <div class="flex-x-between mt-2 text-sm text-gray">
-                <span>总浏览器</span>
+                <span>总浏览量</span>
                 <span>{{ Math.round(transitionTotalPvCount) }}</span>
               </div>
             </el-card>
           </template>
         </el-skeleton>
+      </el-col>
+    </el-row>
+
+    <el-row :gutter="10" class="mt-5">
+      <!-- 访问趋势统计图 -->
+      <el-col :xs="24" :span="16">
+        <el-card>
+          <template #header>
+            <div class="flex-x-between">
+              <span>访问趋势</span>
+              <el-radio-group v-model="visitTrendDateRange" size="small">
+                <el-radio-button :value="7">近7天</el-radio-button>
+                <el-radio-button :value="30">近30天</el-radio-button>
+              </el-radio-group>
+            </div>
+          </template>
+          <ECharts :options="visitTrendChartOptions" height="400px" />
+        </el-card>
       </el-col>
     </el-row>
   </div>
@@ -274,6 +293,8 @@
 import { useUserStore } from "@/store";
 import { Connection } from "@element-plus/icons-vue";
 import { formatGrowthRate } from "@/utils";
+import LogAPI, { type VisitTrendVO } from "@/api/system/log-api";
+import { dayjs } from "element-plus";
 
 defineOptions({
   name: "Dashboard",
@@ -302,7 +323,7 @@ const greetings = computed(() => {
 });
 
 // 访客统计数据加载状态
-const visitStatsLoading = ref(false);
+const visitStatsLoading = ref(true);
 // 访客统计数据
 const visitStatsData = ref({
   todayUvCount: 0,
@@ -363,6 +384,123 @@ const computeGrowthRateClass = (growthRate?: number): string => {
     return "text-[--el-color-info]";
   }
 };
+
+// 访问趋势日期范围（单位：天）
+const visitTrendDateRange = ref(7);
+// 访问趋势图表配置
+const visitTrendChartOptions = ref();
+
+/**
+ * 获取访客统计数据
+ */
+const fetchVisitStatsData = () => {
+  LogAPI.getVisitStats()
+    .then((data) => {
+      visitStatsData.value = data;
+    })
+    .finally(() => {
+      visitStatsLoading.value = false;
+    });
+};
+
+/**
+ * 获取访问趋势数据，并更新图表配置
+ */
+const fetchVisitTrendData = () => {
+  const startDate = dayjs()
+    .subtract(visitTrendDateRange.value - 1, "day")
+    .toDate();
+  const endDate = new Date();
+
+  LogAPI.getVisitTrend({
+    startDate: dayjs(startDate).format("YYYY-MM-DD"),
+    endDate: dayjs(endDate).format("YYYY-MM-DD"),
+  }).then((data) => {
+    updateVisitTrendChartOptions(data);
+  });
+};
+
+/**
+ * 更新访问趋势图表的配置项
+ *
+ * @param data - 访问趋势数据
+ */
+const updateVisitTrendChartOptions = (data: VisitTrendVO) => {
+  visitTrendChartOptions.value = {
+    tooltip: {
+      trigger: "axis",
+    },
+    legend: {
+      data: ["浏览量(PV)", "访客数(UV)"],
+      bottom: 0,
+    },
+    grid: {
+      left: "1%",
+      right: "5%",
+      bottom: "10%",
+      containLabel: true,
+    },
+    xAxis: {
+      type: "category",
+      data: data.dates,
+    },
+    yAxis: {
+      type: "value",
+      splitLine: {
+        show: true,
+        lineStyle: {
+          type: "dashed",
+        },
+      },
+    },
+    series: [
+      {
+        name: "浏览量(PV)",
+        type: "line",
+        data: data.pvList,
+        areaStyle: {
+          color: "rgba(64, 158, 255, 0.1)",
+        },
+        smooth: true,
+        itemStyle: {
+          color: "#4080FF",
+        },
+        lineStyle: {
+          color: "#4080FF",
+        },
+      },
+      {
+        name: "访客数(UV)",
+        type: "line",
+        data: data.ipList,
+        areaStyle: {
+          color: "rgba(103, 194, 58, 0.1)",
+        },
+        smooth: true,
+        itemStyle: {
+          color: "#67C23A",
+        },
+        lineStyle: {
+          color: "#67C23A",
+        },
+      },
+    ],
+  };
+};
+
+// 监听访问趋势日期范围的变化，重新获取趋势数据
+watch(
+  () => visitTrendDateRange.value,
+  () => {
+    fetchVisitTrendData();
+  },
+  { immediate: true }
+);
+
+// 组件挂载后加载访客统计数据和通知公告数据
+onMounted(() => {
+  fetchVisitStatsData();
+});
 </script>
 
 <style lang="scss" scoped>
