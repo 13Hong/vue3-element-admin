@@ -285,6 +285,62 @@
           <ECharts :options="visitTrendChartOptions" height="400px" />
         </el-card>
       </el-col>
+      <!-- 最新动态 -->
+      <el-col :xs="24" :span="8">
+        <el-card>
+          <template #header>
+            <div class="flex-x-between">
+              <span class="header-title">最新动态</span>
+              <el-link
+                type="primary"
+                underline="never"
+                href="https://github.com/13Hong/vue3-element-admin/commits/main/"
+                target="_blank"
+              >
+                完整记录
+                <el-icon class="link-icon"><TopRight /></el-icon>
+              </el-link>
+            </div>
+          </template>
+
+          <el-scrollbar height="400px">
+            <el-timeline class="p-3">
+              <el-timeline-item
+                v-for="(item, index) in versionList"
+                :key="index"
+                :timestamp="item.date"
+                placement="top"
+                :color="index === 0 ? '#67C23A' : '#909399'"
+                :hollow="index !== 0"
+                size="large"
+              >
+                <div class="version-item" :class="{ 'latest-item': index === 0 }">
+                  <div>
+                    <el-text tag="strong">{{ item.title }}</el-text>
+                    <el-tag v-if="item.tag" :type="index === 0 ? 'success' : 'info'" size="small">
+                      {{ item.tag }}
+                    </el-tag>
+                  </div>
+
+                  <el-text class="version-content">{{ item.content }}</el-text>
+
+                  <div v-if="item.link">
+                    <el-link
+                      :type="index === 0 ? 'primary' : 'info'"
+                      :href="item.link"
+                      target="_blank"
+                      underline="never"
+                    >
+                      详情
+                      <el-icon class="link-icon"><TopRight /></el-icon>
+                    </el-link>
+                  </div>
+                </div>
+              </el-timeline-item>
+            </el-timeline>
+          </el-scrollbar>
+        </el-card>
+      </el-col>
     </el-row>
   </div>
 </template>
@@ -300,6 +356,15 @@ defineOptions({
   name: "Dashboard",
   inheritAttrs: false,
 });
+
+interface VersionItem {
+  id: string;
+  title: string; // 版本标题（如：v2.4.0）
+  date: string; // 发布时间
+  content: string; // 版本描述
+  link: string; // 详情链接
+  tag?: string; // 版本标签（可选）
+}
 
 const userStore = useUserStore();
 
@@ -321,6 +386,34 @@ const greetings = computed(() => {
     return "偷偷向银河要了一把碎星，只等你闭上眼睛撒入你的梦中，晚安🌛！";
   }
 });
+
+// 当前通知公告列表
+const versionList = ref<VersionItem[]>([
+  {
+    id: "1",
+    title: "v3.0.0",
+    date: "2025-12-08 00:00:00",
+    content: "布局重写，代码规范重构。",
+    link: "https://github.com/13Hong/vue3-element-admin/commits/main/",
+    tag: "里程碑",
+  },
+  {
+    id: "2",
+    title: "v2.4.0",
+    date: "2025-12-01 00:00:00",
+    content: "实现基础框架搭建，包含权限管理、路由系统等核心功能。",
+    link: "https://github.com/13Hong/vue3-element-admin/commits/main/",
+    tag: "里程碑",
+  },
+  {
+    id: "3",
+    title: "v2.4.0",
+    date: "2025-11-25 00:00:00",
+    content: "实现基础框架搭建，包含权限管理、路由系统等核心功能。",
+    link: "https://github.com/13Hong/vue3-element-admin/commits/main/",
+    tag: "里程碑",
+  },
+]);
 
 // 访客统计数据加载状态
 const visitStatsLoading = ref(true);
@@ -514,6 +607,28 @@ onMounted(() => {
     right: 0;
     z-index: 1;
     border: 0;
+  }
+
+  .version-item {
+    padding: 16px;
+    margin-bottom: 12px;
+    background: var(--el-fill-color-lighter);
+    border-radius: 8px;
+    transition: all 0.2s;
+
+    &.latest-item {
+      background: var(--el-color-primary-light-9);
+      border: 1px solid var(--el-color-primary-light-5);
+    }
+    &:hover {
+      transform: translateX(5px);
+    }
+    .version-content {
+      margin-bottom: 12px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--el-text-color-secondary);
+    }
   }
 }
 </style>
