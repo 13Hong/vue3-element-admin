@@ -12,6 +12,7 @@ declare module 'vue' {
     AppMain: typeof import('./../layout/components/AppMain/index.vue')['default']
     BasicMenu: typeof import('./../layout/components/Menu/BasicMenu.vue')['default']
     Breadcrumb: typeof import('./../components/Breadcrumb/index.vue')['default']
+    DeptTree: typeof import('./../views/system/user/components/DeptTree.vue')['default']
     ECharts: typeof import('./../components/ECharts/index.vue')['default']
     ElBacktop: typeof import('element-plus/es')['ElBacktop']
     ElBadge: typeof import('element-plus/es')['ElBadge']
