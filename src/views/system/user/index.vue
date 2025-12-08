@@ -242,6 +242,7 @@
 
 <script lang="ts" setup>
 import DeptAPI from "@/api/system/dept-api";
+import RoleAPI from "@/api/system/role-api";
 import type { UserForm, UserPageQuery, UserPageVO } from "@/api/system/user-api";
 import UserAPI from "@/api/system/user-api";
 import { DeviceEnum } from "@/enums";
@@ -367,7 +368,7 @@ const handleSubmit = useDebounceFn(() => {
 async function handleOpenDialog(id?: string) {
   dialog.visible = true;
   // 加载角色下拉数据源
-  // roleOptions.value = await RoleAPI.getOptions();
+  roleOptions.value = await RoleAPI.getOptions();
   // 加载部门下拉数据源
   deptOptions.value = await DeptAPI.getOptions();
 
