@@ -7,7 +7,9 @@
       <Breadcrumb />
     </div>
     <!-- 导航栏操作区域 -->
-    <div class="navbar__actions"></div>
+    <div class="navbar__actions">
+      <NavBarActions />
+    </div>
   </div>
 </template>
 

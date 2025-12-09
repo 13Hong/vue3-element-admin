@@ -3,6 +3,7 @@ import { AuthStorage } from "@/utils/auth";
 import AuthAPI, { type LoginFormData } from "@/api/auth-api";
 import UserAPI, { type UserInfo } from "@/api/system/user-api";
 import { usePermissionStoreHook } from "./permission.store";
+import { useDictStoreHook } from "@/store";
 
 export const useUserStore = defineStore("user", () => {
   // 用户信息
@@ -84,9 +85,9 @@ export const useUserStore = defineStore("user", () => {
     // 重置路由
     usePermissionStoreHook().resetRouter();
     // 清除字典缓存
-    // useDictStoreHook().clearDictCache();
+    useDictStoreHook().clearDictCache();
     // 清除标签视图
-    // useTagsViewStore().delAllViews();
+    // useTagsViewStoreHook
 
     // 3. 清理 WebSocket 连接
     // cleanupWebSocket();
