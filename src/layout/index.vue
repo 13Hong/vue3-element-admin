@@ -3,6 +3,7 @@
     <component :is="currentLayoutComponent" />
 
     <!-- 设置面板 - 独立于布局组件 -->
+    <Settings v-if="isShowSettings" />
   </div>
 </template>
 
@@ -11,6 +12,8 @@ import { useRoute } from "vue-router";
 import { useLayout } from "@/composables/layout/uesLayout";
 import { LayoutMode } from "@/enums";
 import LeftLayout from "./modes/left/index.vue";
+import Settings from "./components/Settings/index.vue";
+import { defaultSettings } from "@/settings";
 
 const { currentLayout } = useLayout();
 const route = useRoute();
@@ -25,6 +28,9 @@ const currentLayoutComponent = computed(() => {
       return LeftLayout;
   }
 });
+
+/// Whether to show the settings panel
+const isShowSettings = computed(() => defaultSettings.showSettings);
 </script>
 
 <style lang="scss" scoped>

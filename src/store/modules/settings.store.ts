@@ -5,9 +5,12 @@ import { defineStore } from "pinia";
 import { useStorage } from "@vueuse/core";
 import { STORAGE_KEYS } from "@/constants";
 import { store } from "@/store";
-import { toggleSidebarColor } from "@/utils/theme";
+import { toggleSidebarColor, toggleDarkMode } from "@/utils/theme";
 
 export const useSettingsStore = defineStore("settings", () => {
+  // 设置面板可见性
+  const settingsVisible = ref<boolean>(false);
+
   // 侧边栏配色方案 (经典蓝/极简白)
   const sidebarColorScheme = useStorage<string>(
     STORAGE_KEYS.SIDEBAR_COLOR_SCHEME,
@@ -37,6 +40,17 @@ export const useSettingsStore = defineStore("settings", () => {
     defaultSettings.showTagsView
   );
 
+  // 监听主题变化，自动应用样式
+  watch(
+    [theme, themeColor],
+    ([newTheme, newThemeColor]: [ThemeMode, string]) => {
+      toggleDarkMode(newTheme === ThemeMode.DARK);
+      // const colors = generateThemeColors(newThemeColor, newTheme);
+      // applyTheme(colors);
+    },
+    { immediate: true }
+  );
+
   // 监听侧边栏配色变化
   watch(
     [sidebarColorScheme],
@@ -51,7 +65,13 @@ export const useSettingsStore = defineStore("settings", () => {
     sidebarColorScheme.value = newScheme;
   }
 
+  // 主题更新方法
+  function updateTheme(newTheme: ThemeMode): void {
+    theme.value = newTheme;
+  }
+
   return {
+    settingsVisible,
     sidebarColorScheme,
     layout,
     themeColor,
@@ -60,6 +80,7 @@ export const useSettingsStore = defineStore("settings", () => {
     showWatermark,
     showTagsView,
     updateSidebarColorScheme,
+    updateTheme,
   };
 });
 

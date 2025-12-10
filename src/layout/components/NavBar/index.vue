@@ -8,7 +8,7 @@
     </div>
     <!-- 导航栏操作区域 -->
     <div class="navbar__actions">
-      <NavBarActions />
+      <NavbarActions />
     </div>
   </div>
 </template>
@@ -17,6 +17,7 @@
 import { useLayout } from "@/composables";
 import { useAppStore } from "@/store";
 import Hamburger from "@/components/Hamburger/index.vue";
+import NavbarActions from "./components/NavbarActions.vue";
 
 const { isSidebarOpen } = useLayout();
 const appStore = useAppStore();

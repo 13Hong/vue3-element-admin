@@ -5,6 +5,7 @@
       <!-- 语言切换 -->
       <LangSelect />
     </template>
+
     <!-- 用户菜单 -->
     <div class="navbar-actions__item">
       <el-dropdown trigger="click">
@@ -24,6 +25,15 @@
         </template>
       </el-dropdown>
     </div>
+
+    <!-- 系统设置 -->
+    <div
+      v-if="defaultSettings.showSettings"
+      class="navbar-actions__item"
+      @click="handleSettingsClick"
+    >
+      <div class="i-svg:setting" />
+    </div>
   </div>
 </template>
 
@@ -32,6 +42,7 @@ import { useUserStore, useSettingsStore, useAppStore } from "@/store";
 import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
 import { ThemeMode, LayoutMode, SidebarColor, DeviceEnum } from "@/enums";
+import { defaultSettings } from "@/settings";
 
 const { t } = useI18n();
 const router = useRouter();
@@ -88,6 +99,14 @@ function logout() {
 
 function handleProfileClick() {
   ElMessage.info("测试");
+}
+
+/**
+ * 打开系统设置页面
+ */
+function handleSettingsClick() {
+  console.log(settingStore.settingsVisible);
+  settingStore.settingsVisible = true;
 }
 </script>
 
