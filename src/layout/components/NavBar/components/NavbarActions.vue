@@ -1,7 +1,10 @@
 <template>
   <div :class="['navbar-actions', navbarActionsClass]">
     <!-- 桌面端工具项 -->
-
+    <template v-if="isDesktop">
+      <!-- 语言切换 -->
+      <LangSelect />
+    </template>
     <!-- 用户菜单 -->
     <div class="navbar-actions__item">
       <el-dropdown trigger="click">
@@ -25,10 +28,10 @@
 </template>
 
 <script setup lang="ts">
-import { useUserStore, useSettingsStore } from "@/store";
+import { useUserStore, useSettingsStore, useAppStore } from "@/store";
 import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
-import { ThemeMode, LayoutMode, SidebarColor } from "@/enums";
+import { ThemeMode, LayoutMode, SidebarColor, DeviceEnum } from "@/enums";
 
 const { t } = useI18n();
 const router = useRouter();
@@ -36,6 +39,10 @@ const route = useRoute();
 
 const userStore = useUserStore();
 const settingStore = useSettingsStore();
+const appStore = useAppStore();
+
+// 是否为桌面设备
+const isDesktop = computed(() => appStore.device === DeviceEnum.DESKTOP);
 
 // 根据主题和侧边栏配色方案选择样式类
 const navbarActionsClass = computed(() => {

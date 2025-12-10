@@ -63,6 +63,7 @@ declare module 'vue' {
     GithubCorner: typeof import('./../components/GithubCorner/index.vue')['default']
     Hamburger: typeof import('./../components/Hamburger/index.vue')['default']
     HelloWorld: typeof import('./../components/HelloWorld.vue')['default']
+    LangSelect: typeof import('./../components/LangSelect/index.vue')['default']
     Login: typeof import('./../views/login/components/Login.vue')['default']
     MenuItem: typeof import('./../layout/components/Menu/components/MenuItem.vue')['default']
     MenuItemContent: typeof import('./../layout/components/Menu/components/MenuItemContent.vue')['default']
