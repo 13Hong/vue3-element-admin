@@ -16,6 +16,7 @@ declare module 'vue' {
     Dict: typeof import('./../components/Dict/index.vue')['default']
     DictLabel: typeof import('./../components/Dict/DictLabel.vue')['default']
     ECharts: typeof import('./../components/ECharts/index.vue')['default']
+    ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElBacktop: typeof import('element-plus/es')['ElBacktop']
     ElBadge: typeof import('element-plus/es')['ElBadge']
     ElBreadcrumb: typeof import('element-plus/es')['ElBreadcrumb']

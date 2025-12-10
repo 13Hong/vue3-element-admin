@@ -100,7 +100,7 @@ function logout() {
 }
 
 function handleProfileClick() {
-  ElMessage.info("测试");
+  router.push({ name: "Profile" });
 }
 
 /**
