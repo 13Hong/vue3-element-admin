@@ -2,8 +2,10 @@
   <div :class="['navbar-actions', navbarActionsClass]">
     <!-- 桌面端工具项 -->
     <template v-if="isDesktop">
-      <!-- 语言切换 -->
-      <LangSelect />
+      <!-- 语言选择 -->
+      <div class="navbar-actions__item">
+        <LangSelect />
+      </div>
     </template>
 
     <!-- 用户菜单 -->
