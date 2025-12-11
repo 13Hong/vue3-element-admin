@@ -25,9 +25,9 @@
             </div>
             <div class="user-name">
               <span class="nickname">{{ userProfile.nickname }}</span>
-              <!-- <el-icon class="edit-icon" @click="handleOpenDialog(DialogType.ACCOUNT)">
+              <el-icon class="edit-icon" @click="handleOpenDialog(DialogType.ACCOUNT)">
                 <Edit />
-              </el-icon> -->
+              </el-icon>
             </div>
             <div class="user-role">{{ userProfile.roleNames }}</div>
           </div>
