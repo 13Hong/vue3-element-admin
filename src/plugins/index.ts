@@ -4,6 +4,7 @@ import { setupStore } from "@/store";
 import { setupIcons } from "./icons";
 import { setupI18n } from "@/lang";
 import { setupPermission } from "./permission";
+import { setupDirective } from "@/directives";
 
 export default {
   install(app: App<Element>) {
@@ -17,5 +18,7 @@ export default {
     setupI18n(app);
     // 路由守卫
     setupPermission();
+    // 自定义指令(directive)
+    setupDirective(app);
   },
 };
