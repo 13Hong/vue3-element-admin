@@ -1,5 +1,6 @@
 import type { App } from "vue";
 import { createRouter, createWebHashHistory, type RouteRecordRaw } from "vue-router";
+import performanceRoutes from "./modules/learn/performance";
 
 export const Layout = () => import("@/layout/index.vue");
 
@@ -58,6 +59,7 @@ export const constantRoutes: RouteRecordRaw[] = [
       },
     ],
   },
+  ...performanceRoutes,
 ];
 
 /** 创建路由 */
